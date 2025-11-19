@@ -9,6 +9,14 @@ namespace Ddd.Catalog.Data
 		public DbSet<Product> Products { get; set; }
 		public DbSet<Category> Categories { get; set; }
 
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			// Aplicar todas as configurações de mapeamento do assembly atual
+			modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
+
+			base.OnModelCreating(modelBuilder);
+		}
+
 		protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
 		{
 			// Configuração global: todas as strings como varchar(100)
@@ -18,9 +26,9 @@ namespace Ddd.Catalog.Data
 				.AreUnicode(false);
 		}
 
-		public Task<bool> Commit()
+		public async Task<bool> Commit()
 		{
-			throw new NotImplementedException();
+			return await SaveChangesAsync() > 0;
 		}
 	}
 }

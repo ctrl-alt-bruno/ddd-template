@@ -21,20 +21,38 @@ namespace Ddd.Catalog.Data.Mappings
 				.IsRequired()
 				.HasColumnType("varchar(255)");
 
+			builder.Property(c => c.Active)
+				.IsRequired();
+
+			builder.Property(c => c.Price)
+				.IsRequired()
+				.HasColumnType("decimal(18,2)");
+
+			builder.Property(c => c.CreateDate)
+				.IsRequired();
+
+			builder.Property(c => c.StockQuantity)
+				.HasColumnType("int");
+
 			builder.OwnsOne(c => c.Dimensions, cm =>
 			{
 				cm.Property(c => c.Height)
 					.HasColumnName("Height")
-					.HasColumnType("int");
+					.HasColumnType("decimal(18,2)");
 
 				cm.Property(c => c.Width)
 					.HasColumnName("Width")
-					.HasColumnType("int");
+					.HasColumnType("decimal(18,2)");
 
 				cm.Property(c => c.Depth)
 					.HasColumnName("Depth")
-					.HasColumnType("int");
+					.HasColumnType("decimal(18,2)");
 			});
+
+			// N : 1 => Produtos possuem Categoria
+			builder.HasOne(c => c.Category)
+				.WithMany(c => c.Products)
+				.HasForeignKey(c => c.CategoryId);
 
 			builder.ToTable("Products");
 		}
