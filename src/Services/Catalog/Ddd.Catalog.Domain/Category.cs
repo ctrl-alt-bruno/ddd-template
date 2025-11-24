@@ -11,13 +11,16 @@ public class Category : Entity
 
 	protected Category()
 	{
-
+		Name = string.Empty;
+		Code = 0;
+		Products = new List<Product>();
 	}
 
 	public Category(string name, int code)
 	{
 		Name = name;
 		Code = code;
+		Products = new List<Product>();
 		Validate();
 	}
 

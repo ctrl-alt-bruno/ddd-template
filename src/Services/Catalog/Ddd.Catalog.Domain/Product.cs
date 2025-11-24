@@ -12,8 +12,22 @@ public class Product : Entity, IAggregateRoot
 	public string Thumbnail { get; private set; }
 	public int? StockQuantity { get; private set; }
 	public Guid CategoryId { get; private set; }
-	public Dimensions Dimensions { get; set; }
+	public Dimensions? Dimensions { get; set; }
 	public Category? Category { get; private set; }
+
+	public Product()
+	{
+		Name = string.Empty;
+		Description = string.Empty;
+		Active = false;
+		Price = 0;
+		CreateDate = DateTime.MinValue;
+		Thumbnail = string.Empty;
+		StockQuantity = null;
+		CategoryId = Guid.NewGuid();
+		Dimensions = null;
+		Category = null;
+	}
 
 	public Product(string name, string description, bool active, decimal price, DateTime createDate, string thumbnail,
 		Guid categoryId, Dimensions dimensions)
